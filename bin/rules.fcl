@@ -23,55 +23,43 @@ VAR_OUTPUT
 END_VAR
 
 FUZZIFY gorcina
-	TERM slabaGrocina := (1,1)(3,0);
+	TERM slabaGrocina := (1,1)(2.5,0);
 	TERM veomaGorko := (3.5,0)(5,1);
 	TERM umerenoGorko:= (2,0)(3,1)(4,0);
 END_FUZZIFY
 
 FUZZIFY jacina
-	TERM slabo := (1,1)(3,0);
-	TERM srednjejako := TRAPE 2 3 3 5;
-	TERM jako := (3,0)(5,1) ;
+	TERM slabo := (1,1)(2.5,0);
+	TERM srednjejako := TRAPE 2 3 3.5 4.2;
+	TERM jako := (3.4,0)(5,1) ;
 END_FUZZIFY
 
 FUZZIFY aroma
-	TERM slabaAroma := (1,1)(4,0);
-	TERM umerenaAroma := TRAPE 1 3 3 5;
-	TERM jakaAroma := (2,0)(5,1);
+	TERM slabaAroma := (1,1)(2.5,0);
+	TERM umerenaAroma := TRAPE 2 3 3 4;
+	TERM jakaAroma := (3.2,0)(5,1);
 END_FUZZIFY
 
 FUZZIFY boja
-	TERM svetla := (1,1)(4,0);
+	TERM svetla := (1,1)(2.5,0);
 	TERM mutna := TRAPE 2 3 3 4;
-	TERM tamna := SIGM 3 4;
+	TERM tamna := SIGM 3.2 4;
 END_FUZZIFY
 
 DEFUZZIFY belgianPaleAle
-	TERM maloVerovatno := TRIAN 1 2 3 ;
-	TERM verovatno := TRIAN 2 3 4;
-	TERM veomaVerovatno := SIGM 3 4.2;
-	METHOD : COG;
-	DEFAULT := 0;
-END_DEFUZZIFY
-
-DEFUZZIFY indianPaleAle
-	TERM maloVerovatno := TRIAN 1 2 3 ;
-	TERM verovatno := TRIAN 2 3 4;
-	TERM veomaVerovatno := SIGM 3 4.2;
-	METHOD : COG;
-	DEFAULT := 0;
-END_DEFUZZIFY
-
-DEFUZZIFY witbeer
-	TERM maloVerovatno := TRIAN 1 2 3 ;
+	TERM nije := (1,1)(2,0);
+	TERM maloVerovatno := TRIAN 1 2 2.5 ;
+	TERM mozda := TRIAN 2 2.5 3.2;
 	TERM verovatno := TRIAN 3 4 5;
 	TERM veomaVerovatno := SIGM 3 4.2;
 	METHOD : COG;
 	DEFAULT := 0;
 END_DEFUZZIFY
 
-DEFUZZIFY porter
+DEFUZZIFY indianPaleAle
+	TERM nije := (1,1)(2,0);
 	TERM maloVerovatno := TRIAN 1 2 3 ;
+	TERM mozda := TRIAN 2 2.5 3.2;
 	TERM verovatno := TRIAN 3 4 5;
 	TERM veomaVerovatno := SIGM 3 4.2;
 	METHOD : COG;
@@ -79,15 +67,9 @@ DEFUZZIFY porter
 END_DEFUZZIFY
 
 DEFUZZIFY stout
+	TERM nije := (1,1)(2,0);
 	TERM maloVerovatno := TRIAN 1 2 3 ;
-	TERM verovatno := TRIAN 3 4 5;
-	TERM veomaVerovatno := SIGM 3 4.2;
-	METHOD : COG;
-	DEFAULT := 0;
-END_DEFUZZIFY
-
-DEFUZZIFY belgianStrongAle
-	TERM maloVerovatno := TRIAN 1 2 3 ;
+	TERM mozda := TRIAN 2 2.5 3.2;
 	TERM verovatno := TRIAN 3 4 5;
 	TERM veomaVerovatno := SIGM 3 4.2;
 	METHOD : COG;
@@ -95,47 +77,9 @@ DEFUZZIFY belgianStrongAle
 END_DEFUZZIFY
 
 DEFUZZIFY bock
+	TERM nije := (1,1)(2,0);
 	TERM maloVerovatno := TRIAN 1 2 3 ;
-	TERM verovatno := TRIAN 3 4 5;
-	TERM veomaVerovatno := SIGM 3 4.2;
-	METHOD : COG;
-	DEFAULT := 0;
-END_DEFUZZIFY
-
-DEFUZZIFY pilsner
-	TERM maloVerovatno := TRIAN 1 2 3 ;
-	TERM verovatno := TRIAN 3 4 5;
-	TERM veomaVerovatno := SIGM 3 4.2;
-	METHOD : COG;
-	DEFAULT := 0;
-END_DEFUZZIFY
-
-DEFUZZIFY paleLager
-	TERM maloVerovatno := TRIAN 1 2 3 ;
-	TERM verovatno := TRIAN 3 4 5;
-	TERM veomaVerovatno := SIGM 3 4.2;
-	METHOD : COG;
-	DEFAULT := 0;
-END_DEFUZZIFY
-
-DEFUZZIFY darkLager
-	TERM maloVerovatno := TRIAN 1 2 3 ;
-	TERM verovatno := TRIAN 3 4 5;
-	TERM veomaVerovatno := SIGM 3 4.2;
-	METHOD : COG;
-	DEFAULT := 0;
-END_DEFUZZIFY
-
-DEFUZZIFY kristalweizen
-	TERM maloVerovatno := TRIAN 1 2 3 ;
-	TERM verovatno := TRIAN 3 4 5;
-	TERM veomaVerovatno := SIGM 3 4.2;
-	METHOD : COG;
-	DEFAULT := 0;
-END_DEFUZZIFY
-
-DEFUZZIFY heffeweizen
-	TERM maloVerovatno := TRIAN 1 2 3 ;
+	TERM mozda := TRIAN 2 2.5 3.2;
 	TERM verovatno := TRIAN 3 4 5;
 	TERM veomaVerovatno := SIGM 3 4.2;
 	METHOD : COG;
@@ -147,41 +91,35 @@ RULEBLOCK belgianPaleAleRuleBlock
 	ACT : MIN;
 	ACCU : MAX;
 	
-	RULE 1 : IF boja IS tamna
-				THEN belgianPaleAle IS maloVerovatno;
-				
-	RULE 2 : IF boja IS mutna
-				THEN belgianPaleAle IS maloVerovatno;
+	RULE 1 : IF boja IS tamna OR aroma IS jakaAroma OR gorcina IS veomaGorko
+				THEN belgianPaleAle IS nije;
 	
-	RULE 3 : IF boja IS svetla
-				THEN belgianPaleAle IS veomaVerovatno;
-				
-	RULE 4 : IF aroma IS slabaAroma
+	RULE 2 : IF jacina IS slabo AND boja IS svetla AND aroma IS slabaAroma
 				THEN belgianPaleAle IS veomaVerovatno;
 	
-	RULE 5 : IF aroma IS umerenaAroma
-				THEN belgianPaleAle IS verovatno;	
-				
-	RULE 6 : IF aroma IS jakaAroma
+	RULE 3 : IF (jacina IS slabo OR jacina IS srednjejako) AND boja IS mutna
 				THEN belgianPaleAle IS maloVerovatno;
-				
-	RULE 7 : IF gorcina IS slabaGrocina
-				THEN belgianPaleAle IS veomaVerovatno;
 	
-	RULE 8 : IF gorcina IS umerenoGorko
+	RULE 4 : IF jacina IS slabo AND boja IS svetla AND (aroma IS slabaAroma OR gorcina IS slabaGrocina)
+				THEN belgianPaleAle IS veomaVerovatno;
+				
+	RULE 5 : IF jacina IS srednjejako AND boja IS svetla AND aroma IS slabaAroma AND gorcina IS slabaGrocina
+				THEN belgianPaleAle IS verovatno;
+				
+	RULE 6 : IF aroma IS jakaAroma AND (boja IS tamna OR boja IS mutna)
+				THEN belgianPaleAle IS nije;
+				
+	RULE 7 : IF jacina IS slabo AND boja IS svetla AND (aroma IS umerenaAroma OR gorcina IS umerenoGorko)
 				THEN belgianPaleAle IS verovatno;
 	
-	RULE 9 : IF gorcina IS veomaGorko
+	RULE 8 : IF jacina IS srednjejako AND boja IS svetla AND (aroma IS umerenaAroma OR gorcina IS umerenoGorko)
 				THEN belgianPaleAle IS maloVerovatno;
 				
-	RULE 10 : IF jacina IS slabo
-				THEN belgianPaleAle IS veomaVerovatno;
-	
-	RULE 11 : IF jacina IS srednjejako
-				THEN belgianPaleAle IS verovatno;
-	
-	RULE 12 : IF jacina IS jako
-				THEN belgianPaleAle IS maloVerovatno;
+	RULE 9 : IF jacina IS srednjejako AND boja IS svetla AND (aroma IS slabaAroma OR gorcina IS slabaGrocina)
+				THEN belgianPaleAle IS mozda;
+				
+	RULE 10 : IF boja IS mutna AND gorcina IS slabaGrocina AND jacina IS slabo
+				THEN belgianPaleAle IS mozda;
 		
 END_RULEBLOCK
 
@@ -190,41 +128,35 @@ RULEBLOCK indianPaleAleRuleBlock
 	ACT : MIN;
 	ACCU : MAX;
 	
-	RULE 1 : IF boja IS tamna
-				THEN indianPaleAle IS maloVerovatno;
+	RULE 1 : IF gorcina IS veomaGorko AND (boja IS svetla OR boja IS mutna)
+				THEN indianPaleAle IS veomaVerovatno;
 				
-	RULE 2 : IF boja IS mutna
+	RULE 2 : IF boja IS mutna AND gorcina IS veomaGorko AND (jacina IS jako OR jacina IS srednjejako)
 				THEN indianPaleAle IS veomaVerovatno;
 	
-	RULE 3 : IF boja IS svetla
+	RULE 3 : IF (boja IS mutna OR boja IS svetla) AND gorcina IS veomaGorko AND (jacina IS jako OR jacina IS srednjejako)
 				THEN indianPaleAle IS verovatno;
 				
-	RULE 4 : IF aroma IS slabaAroma
-				THEN indianPaleAle IS maloVerovatno;
-	
-	RULE 5 : IF aroma IS umerenaAroma
-				THEN indianPaleAle IS verovatno;	
-				
-	RULE 6 : IF aroma IS jakaAroma
+	RULE 4 : IF boja IS mutna AND aroma IS umerenaAroma AND jacina IS srednjejako AND gorcina IS veomaGorko
 				THEN indianPaleAle IS veomaVerovatno;
 				
-	RULE 7 : IF gorcina IS slabaGrocina
+	RULE 5 : IF gorcina IS slabaGrocina
+				THEN indianPaleAle IS nije;
+	
+	RULE 6 : IF gorcina IS umerenoGorko AND boja IS mutna AND aroma IS umerenaAroma
+				THEN indianPaleAle IS mozda;
+	
+	RULE 7 : IF boja IS tamna
 				THEN indianPaleAle IS maloVerovatno;
-	
-	RULE 8 : IF gorcina IS umerenoGorko
-				THEN indianPaleAle IS verovatno;
-	
-	RULE 9 : IF gorcina IS veomaGorko
-				THEN indianPaleAle IS veomaVerovatno;
 				
-	RULE 10 : IF jacina IS slabo
-				THEN indianPaleAle IS maloVerovatno;
-	
-	RULE 11 : IF jacina IS srednjejako
+	RULE 8 : IF boja IS svetla AND aroma IS umerenaAroma AND jacina IS srednjejako AND gorcina IS veomaGorko
 				THEN indianPaleAle IS veomaVerovatno;
 	
-	RULE 12 : IF jacina IS jako
-				THEN indianPaleAle IS verovatno;
+	RULE 9 : IF (boja IS svetla OR boja IS mutna) AND gorcina IS veomaGorko
+				THEN indianPaleAle IS veomaVerovatno;
+	
+	RULE 10 : IF jacina IS jako AND (boja IS svetla OR boja IS mutna) AND gorcina IS veomaGorko
+				THEN indianPaleAle IS veomaVerovatno;
 		
 END_RULEBLOCK
 
@@ -233,41 +165,41 @@ RULEBLOCK StoutRuleBlock
 	ACT : MIN;
 	ACCU : MAX;
 	
-	RULE 1 : IF boja IS tamna
+	RULE 1 : IF boja IS tamna AND jacina IS jako AND gorcina IS veomaGorko AND aroma IS jakaAroma
 				THEN stout IS veomaVerovatno;
 				
-	RULE 2 : IF boja IS mutna
-				THEN stout IS maloVerovatno;
+	RULE 2 : IF boja IS mutna OR boja IS svetla
+				THEN stout IS nije;
 	
-	RULE 3 : IF boja IS svetla
-				THEN stout IS maloVerovatno;
+	RULE 3 : IF gorcina IS slabaGrocina OR aroma IS slabaAroma OR jacina IS slabo
+				THEN stout IS nije;
 				
-	RULE 4 : IF aroma IS slabaAroma
-				THEN stout IS maloVerovatno;
+	RULE 4 : IF boja IS tamna AND (aroma IS umerenaAroma OR gorcina IS umerenoGorko)
+				THEN stout IS mozda;
 	
-	RULE 5 : IF aroma IS umerenaAroma
-				THEN stout IS maloVerovatno;	
+	RULE 5 : IF aroma IS slabaAroma OR gorcina IS slabaGrocina
+				THEN stout IS nije;	
 				
-	RULE 6 : IF aroma IS jakaAroma
+	RULE 6 : IF boja IS tamna AND jacina IS jako AND gorcina IS veomaGorko
 				THEN stout IS veomaVerovatno;
 				
-	RULE 7 : IF gorcina IS slabaGrocina
-				THEN stout IS maloVerovatno;
-	
-	RULE 8 : IF gorcina IS umerenoGorko
-				THEN stout IS maloVerovatno;
-	
-	RULE 9 : IF gorcina IS veomaGorko
+	RULE 7 : IF boja IS tamna AND jacina IS jako AND aroma IS jakaAroma
 				THEN stout IS veomaVerovatno;
-				
-	RULE 10 : IF jacina IS slabo
-				THEN stout IS maloVerovatno;
 	
-	RULE 11 : IF jacina IS srednjejako
+	RULE 8 : IF gorcina IS umerenoGorko AND jacina IS srednjejako AND aroma IS jakaAroma
 				THEN stout IS verovatno;
 	
-	RULE 12 : IF jacina IS jako
+	RULE 9 : IF aroma IS jakaAroma
 				THEN stout IS veomaVerovatno;
+				
+	RULE 10 : IF aroma IS jakaAroma AND (gorcina IS slabaGrocina OR jacina IS slabo)
+				THEN stout IS maloVerovatno;
+	
+	RULE 11 : IF jacina IS slabo AND aroma IS slabaAroma
+				THEN stout IS nije;
+	
+	RULE 12 : IF aroma IS slabaAroma 
+				THEN stout IS nije;
 		
 END_RULEBLOCK
 
@@ -276,41 +208,35 @@ RULEBLOCK bockRuleBlock
 	ACT : MIN;
 	ACCU : MAX;
 	
-	RULE 1 : IF boja IS tamna
-				THEN bock IS verovatno;
+	RULE 1 : IF (boja IS tamna OR boja IS mutna) AND gorcina IS slabaGrocina
+				THEN bock IS veomaVerovatno;
 				
-	RULE 2 : IF boja IS mutna
-				THEN bock IS verovatno;
+	RULE 2 : IF (jacina IS srednjejako OR jacina IS jako) AND (gorcina IS slabaGrocina OR gorcina IS umerenoGorko)
+				THEN bock IS veomaVerovatno;
 	
-	RULE 3 : IF boja IS svetla
-				THEN bock IS maloVerovatno;
+	RULE 3 : IF aroma IS umerenaAroma AND jacina IS srednjejako AND (gorcina IS slabaGrocina OR gorcina IS umerenoGorko)
+				THEN bock IS mozda;
 				
-	RULE 4 : IF aroma IS slabaAroma
-				THEN bock IS maloVerovatno;
+	RULE 4 : IF aroma IS slabaAroma AND jacina IS slabo AND (gorcina IS slabaGrocina OR gorcina IS umerenoGorko)
+				THEN bock IS nije;
 	
-	RULE 5 : IF aroma IS umerenaAroma
-				THEN bock IS verovatno;	
+	RULE 5 : IF aroma IS umerenaAroma AND (jacina IS srednjejako OR jacina IS jako) AND gorcina IS slabaGrocina
+				THEN bock IS veomaVerovatno;	
 				
-	RULE 6 : IF aroma IS jakaAroma
+	RULE 6 : IF (aroma IS umerenaAroma OR aroma IS jakaAroma) AND jacina IS srednjejako AND gorcina IS slabaGrocina
 				THEN bock IS veomaVerovatno;
 				
 	RULE 7 : IF gorcina IS slabaGrocina
 				THEN bock IS maloVerovatno;
 	
-	RULE 8 : IF gorcina IS umerenoGorko
-				THEN bock IS veomaVerovatno;
-	
-	RULE 9 : IF gorcina IS veomaGorko
-				THEN bock IS maloVerovatno;
-				
-	RULE 10 : IF jacina IS slabo
-				THEN bock IS maloVerovatno;
-	
-	RULE 11 : IF jacina IS srednjejako
-				THEN bock IS veomaVerovatno;
-	
-	RULE 12 : IF jacina IS jako
+	RULE 8 : IF jacina IS jako AND aroma IS jakaAroma AND (gorcina IS umerenoGorko OR gorcina IS slabaGrocina)
 				THEN bock IS verovatno;
+	
+	RULE 9 : IF boja IS mutna AND (gorcina IS slabaGrocina OR gorcina IS umerenoGorko) AND jacina IS srednjejako
+				THEN bock IS verovatno;
+				
+	RULE 10 : IF jacina IS slabo AND gorcina IS slabaGrocina AND aroma IS slabaAroma
+				THEN bock IS nije;
 		
 END_RULEBLOCK
 

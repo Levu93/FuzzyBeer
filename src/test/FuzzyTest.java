@@ -9,9 +9,9 @@ import org.junit.Test;
 import fuzzyBeer.FuzzyLogic;
 
 public class FuzzyTest {
-
+	
 	@Test
-	public void MyTest() throws Exception {
+	public void MyTest2() throws Exception {
 		double bitterness = 4;
 		double alcohol = 4;
 		double aroma = 4;
@@ -25,8 +25,28 @@ public class FuzzyTest {
 		assertTrue(ipa>bock);
 		assertTrue(ipa>stout);
 		assertTrue(ipa>bpa);
-		assertTrue(bock>bpa);
-		assertTrue(bock>stout);
+		assertTrue(stout>bpa);
+		assertTrue(stout>bock);
+		assertTrue(stout>bpa);
+	}
+	
+	@Test
+	public void MyTest() throws Exception {
+		double bitterness = 5;
+		double alcohol = 5;
+		double aroma = 5;
+		double color = 1;
+		FuzzyLogic fl = new FuzzyLogic();
+		HashMap<String, Double> x = fl.evaluate(bitterness, alcohol, color, aroma);
+		double ipa = x.get("indianPaleAle");
+		double bpa = x.get("belgianPaleAle");
+		double stout = x.get("stout");
+		double bock = x.get("bock");
+		assertTrue(ipa>bock);
+		assertTrue(ipa>stout);
+		assertTrue(ipa>bpa);
+		assertTrue(stout>bpa);
+		assertTrue(stout>bock);
 	}
 	
 	@Test
@@ -45,15 +65,14 @@ public class FuzzyTest {
 		assertTrue(bpa>stout);
 		assertTrue(bpa>bock);
 		assertTrue(ipa>stout);
-		assertTrue(bock>stout);
 	}
 	
 	
 	@Test
 	public void IPAtest1() throws Exception {
-		double bitterness = 3;
+		double bitterness = 4;
 		double alcohol = 3;
-		double aroma = 3;
+		double aroma = 4;
 		double color = 2;
 		FuzzyLogic fl = new FuzzyLogic();
 		HashMap<String, Double> x = fl.evaluate(bitterness, alcohol, color, aroma);
@@ -64,8 +83,27 @@ public class FuzzyTest {
 		assertTrue(ipa>bpa);
 		assertTrue(ipa>stout);
 		assertTrue(ipa>bock);
-		assertTrue(bock>bpa);
-		assertTrue(bock>stout);
+		assertTrue(stout>bock);
+		assertTrue(stout>bpa);
+	}
+	
+	@Test
+	public void IPATest2() throws Exception {
+		double bitterness = 4;
+		double alcohol = 4;
+		double aroma = 4;
+		double color = 2;
+		FuzzyLogic fl = new FuzzyLogic();
+		HashMap<String, Double> x = fl.evaluate(bitterness, alcohol, color, aroma);
+		double ipa = x.get("indianPaleAle");
+		double bpa = x.get("belgianPaleAle");
+		double stout = x.get("stout");
+		double bock = x.get("bock");
+		assertTrue(ipa>bock);
+		assertTrue(ipa>stout);
+		assertTrue(ipa>bpa);
+		assertTrue(stout>bpa);
+		assertTrue(stout>bock);
 	}
 	
 	@Test
@@ -83,7 +121,7 @@ public class FuzzyTest {
 		assertTrue(stout>bpa);
 		assertTrue(stout>ipa);
 		assertTrue(stout>bock);
-		assertTrue(bock>bpa);
+		assertTrue(ipa>bock);
 		assertTrue(ipa>bpa);
 	}
 	
@@ -102,7 +140,7 @@ public class FuzzyTest {
 		assertTrue(stout>bpa);
 		assertTrue(stout>ipa);
 		assertTrue(stout>bock);
-		assertTrue(bock>bpa);
+		assertTrue(ipa>bock);
 		assertTrue(ipa>bpa);
 	}
 	
@@ -121,7 +159,7 @@ public class FuzzyTest {
 		assertTrue(stout>bpa);
 		assertTrue(stout>ipa);
 		assertTrue(stout>bock);
-		assertTrue(bock>bpa);
+		assertTrue(ipa>bock);
 		assertTrue(ipa>bpa);
 	}
 	
@@ -140,15 +178,15 @@ public class FuzzyTest {
 		assertTrue(stout>bpa);
 		assertTrue(stout>ipa);
 		assertTrue(stout>bock);
-		assertTrue(bock>bpa);
+		assertTrue(ipa>bock);
 		assertTrue(ipa>bpa);
 	}
 	
 	@Test
 	public void BockTest1() throws Exception {
-		double bitterness = 3;
-		double alcohol = 3;
-		double aroma = 3;
+		double bitterness = 2;
+		double alcohol = 4;
+		double aroma = 4;
 		double color = 3;
 		FuzzyLogic fl = new FuzzyLogic();
 		HashMap<String, Double> x = fl.evaluate(bitterness, alcohol, color, aroma);
@@ -159,7 +197,7 @@ public class FuzzyTest {
 		assertTrue(bock>bpa);
 		assertTrue(bock>stout);
 		assertTrue(bock>ipa);
-		assertTrue(ipa>bpa);
-		assertTrue(ipa>stout);
+		assertTrue(stout>bpa);
+		assertTrue(stout>ipa);
 	}
 }
