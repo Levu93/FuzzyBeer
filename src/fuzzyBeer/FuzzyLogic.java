@@ -37,15 +37,15 @@ public class FuzzyLogic {
 		rezultat.put("belgianPaleAle", fis.getVariable("belgianPaleAle").defuzzify());
 		rezultat.put("indianPaleAle",  fis.getVariable("indianPaleAle").defuzzify());
 		//rezultat.put("witbeer",  fis.getVariable("witbeer").defuzzify());
-		//rezultat.put("porter",  fis.getVariable("porter").defuzzify());
+		rezultat.put("porter",  fis.getVariable("porter").defuzzify());
 		rezultat.put("stout",  fis.getVariable("stout").defuzzify());
-		//rezultat.put("belgianStrongAle",  fis.getVariable("belgianStrongAle").defuzzify());
+		rezultat.put("belgianStrongAle",  fis.getVariable("belgianStrongAle").defuzzify());
 		rezultat.put("bock",  fis.getVariable("bock").defuzzify());
 		//rezultat.put("pilsner",  fis.getVariable("pilsner").defuzzify());
 		//rezultat.put("paleLager",  fis.getVariable("paleLager").defuzzify());
-		//rezultat.put("darkLager",  fis.getVariable("darkLager").defuzzify());
-		//rezultat.put("kristalweizen",  fis.getVariable("kristalweizen").defuzzify());
-		//rezultat.put("heffeweizen",  fis.getVariable("heffeweizen").defuzzify());
+		rezultat.put("darkLager",  fis.getVariable("darkLager").defuzzify());
+		rezultat.put("kristalweizen",  fis.getVariable("kristalweizen").defuzzify());
+		rezultat.put("heffeweizen",  fis.getVariable("heffeweizen").defuzzify());
 		
 		JFuzzyChart.get().chart(fis.getVariable("gorcina"), true);
 		JFuzzyChart.get().chart(fis.getVariable("boja"), true);
