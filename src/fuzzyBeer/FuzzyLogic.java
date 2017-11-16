@@ -34,18 +34,18 @@ public class FuzzyLogic {
 		
 		HashMap<String, Double> rezultat = new HashMap<>();
 		
-		rezultat.put("belgianPaleAle", fis.getVariable("belgianPaleAle").defuzzify());
-		rezultat.put("indianPaleAle",  fis.getVariable("indianPaleAle").defuzzify());
-		//rezultat.put("witbeer",  fis.getVariable("witbeer").defuzzify());
-		rezultat.put("porter",  fis.getVariable("porter").defuzzify());
-		rezultat.put("stout",  fis.getVariable("stout").defuzzify());
-		rezultat.put("belgianStrongAle",  fis.getVariable("belgianStrongAle").defuzzify());
-		rezultat.put("bock",  fis.getVariable("bock").defuzzify());
-		//rezultat.put("pilsner",  fis.getVariable("pilsner").defuzzify());
-		//rezultat.put("paleLager",  fis.getVariable("paleLager").defuzzify());
-		rezultat.put("darkLager",  fis.getVariable("darkLager").defuzzify());
-		rezultat.put("kristalweizen",  fis.getVariable("kristalweizen").defuzzify());
-		rezultat.put("heffeweizen",  fis.getVariable("heffeweizen").defuzzify());
+		rezultat.put("Belgian Pale Ale", fis.getVariable("belgianPaleAle").defuzzify());
+		rezultat.put("Indian Pale Ale",  fis.getVariable("indianPaleAle").defuzzify());
+		rezultat.put("Witbier",  fis.getVariable("witbeer").defuzzify());
+		rezultat.put("Porter",  fis.getVariable("porter").defuzzify());
+		rezultat.put("Stout",  fis.getVariable("stout").defuzzify());
+		rezultat.put("Belgian Strong Ale",  fis.getVariable("belgianStrongAle").defuzzify());
+		rezultat.put("Bock",  fis.getVariable("bock").defuzzify());
+		rezultat.put("Pilsner",  fis.getVariable("pilsner").defuzzify());
+		rezultat.put("Pale lager",  fis.getVariable("paleLager").defuzzify());
+		rezultat.put("Dark lager",  fis.getVariable("darkLager").defuzzify());
+		rezultat.put("Kristalweizen",  fis.getVariable("kristalweizen").defuzzify());
+		rezultat.put("Heffeweizen",  fis.getVariable("heffeweizen").defuzzify());
 		
 		JFuzzyChart.get().chart(fis.getVariable("gorcina"), true);
 		JFuzzyChart.get().chart(fis.getVariable("boja"), true);
@@ -56,10 +56,6 @@ public class FuzzyLogic {
         HashMap<String, Double> sortedMapDesc = sortByComparator(rezultat, DESC);
         printMap(sortedMapDesc);
 		
-        
-        //for( Rule r : fis.getFunctionBlock("blockOne").getFuzzyRuleBlock("belgianPaleAleRuleBlock").getRules()) System.out.println(r);
-		//for( Rule r : fis.getFunctionBlock("blockOne").getFuzzyRuleBlock("indianPaleAleRuleBlock").getRules()) System.out.println(r);
-		
 		return sortedMapDesc;
 		
 	}
@@ -69,7 +65,6 @@ public class FuzzyLogic {
 
         List<Entry<String, Double>> list = new LinkedList<Entry<String, Double>>(unsortMap.entrySet());
 
-        // Sorting the list based on values
         Collections.sort(list, new Comparator<Entry<String, Double>>()
         {
             public int compare(Entry<String, Double> o1,
@@ -86,8 +81,7 @@ public class FuzzyLogic {
                 }
             }
         });
-
-        // Maintaining insertion order with the help of LinkedList
+        
         HashMap<String, Double> sortedMap = new LinkedHashMap<String, Double>();
         for (Entry<String, Double> entry : list)
         {

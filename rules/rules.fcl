@@ -136,6 +136,36 @@ DEFUZZIFY belgianStrongAle
 	DEFAULT := 0;
 END_DEFUZZIFY
 
+DEFUZZIFY pilsner
+	TERM nije := (1,1)(2,0);
+	TERM maloVerovatno := TRIAN 1 2 3 ;
+	TERM mozda := TRIAN 2 2.5 3.2;
+	TERM verovatno := TRIAN 3 4 5;
+	TERM veomaVerovatno := SIGM 3 4.2;
+	METHOD : COG;
+	DEFAULT := 0;
+END_DEFUZZIFY
+
+DEFUZZIFY witbeer
+	TERM nije := (1,1)(2,0);
+	TERM maloVerovatno := TRIAN 1 2 3 ;
+	TERM mozda := TRIAN 2 2.5 3.2;
+	TERM verovatno := TRIAN 3 4 5;
+	TERM veomaVerovatno := SIGM 3 4.2;
+	METHOD : COG;
+	DEFAULT := 0;
+END_DEFUZZIFY
+
+DEFUZZIFY paleLager
+	TERM nije := (1,1)(2,0);
+	TERM maloVerovatno := TRIAN 1 2 3 ;
+	TERM mozda := TRIAN 2 2.5 3.2;
+	TERM verovatno := TRIAN 3 4 5;
+	TERM veomaVerovatno := SIGM 3 4.2;
+	METHOD : COG;
+	DEFAULT := 0;
+END_DEFUZZIFY
+
 RULEBLOCK belgianPaleAleRuleBlock
 	AND : MIN;
 	ACT : MIN;
@@ -287,6 +317,9 @@ RULEBLOCK bockRuleBlock
 				
 	RULE 10 : IF jacina IS slabo AND gorcina IS veomaGorko AND aroma IS jakaAroma
 				THEN bock IS nije;
+	
+	RULE 11 : IF (jacina IS slabo OR jacina IS srednjejako) AND boja IS mutna
+				THEN bock IS maloVerovatno;
 		
 END_RULEBLOCK
 
@@ -307,23 +340,26 @@ RULEBLOCK heffeweizenRuleBlock
 	RULE 4 : IF aroma IS slabaAroma AND jacina IS slabo AND (gorcina IS slabaGrocina OR gorcina IS umerenoGorko)
 				THEN heffeweizen IS verovatno;
 	
-	RULE 5 : IF aroma IS umerenaAroma AND (jacina IS srednjejako OR jacina IS slabo) AND gorcina IS slabaGrocina
-				THEN heffeweizen IS veomaVerovatno;	
+	RULE 5 : IF aroma IS umerenaAroma AND  jacina IS slabo AND gorcina IS slabaGrocina
+				THEN heffeweizen IS verovatno;	
 				
-	RULE 6 : IF aroma IS umerenaAroma AND jacina IS srednjejako AND gorcina IS slabaGrocina AND boja IS mutna
+	RULE 6 : IF aroma IS umerenaAroma AND jacina IS slabo AND gorcina IS slabaGrocina AND boja IS mutna
 				THEN heffeweizen IS veomaVerovatno;
 				
-	RULE 7 : IF gorcina IS veomaGorko
+	RULE 7 : IF gorcina IS veomaGorko OR aroma IS slabaAroma
 				THEN heffeweizen IS nije;
 	
-	RULE 8 : IF jacina IS jako AND aroma IS jakaAroma AND (gorcina IS umerenoGorko OR gorcina IS veomaGorko)
+	RULE 8 : IF jacina IS jako AND aroma IS slabaAroma AND (gorcina IS umerenoGorko OR gorcina IS veomaGorko)
 				THEN heffeweizen IS nije;
 	
-	RULE 9 : IF boja IS mutna AND (gorcina IS slabaGrocina OR gorcina IS umerenoGorko) AND jacina IS srednjejako
+	RULE 9 : IF boja IS mutna AND gorcina IS slabaGrocina AND (jacina IS srednjejako OR jacina IS slabo)
 				THEN heffeweizen IS veomaVerovatno;
 				
-	RULE 10 : IF jacina IS slabo AND gorcina IS slabaGrocina AND aroma IS slabaAroma
-				THEN heffeweizen IS mozda;
+	RULE 10 : IF jacina IS slabo AND gorcina IS slabaGrocina AND aroma IS umerenaAroma
+				THEN heffeweizen IS verovatno;
+	
+	RULE 11 : IF boja IS svetla OR boja IS tamna
+				THEN heffeweizen IS nije;
 
 END_RULEBLOCK
 
@@ -437,7 +473,7 @@ END_RULEBLOCK
 
 RULEBLOCK belgianStrongAleRuleBlock
 
-	RULE 1 : IF (boja IS mutna OR boja IS svetla) AND gorcina IS umerenoGorko AND jacina IS jako
+	RULE 1 : IF boja IS mutna AND gorcina IS umerenoGorko AND jacina IS jako
 				THEN belgianStrongAle IS veomaVerovatno;
 				
 	RULE 2 : IF boja IS tamna
@@ -457,15 +493,129 @@ RULEBLOCK belgianStrongAleRuleBlock
 	
 	RULE 7 : IF gorcina IS umerenoGorko AND jacina IS jako
 				THEN belgianStrongAle IS verovatno;
-	
-	RULE 8 : IF aroma IS umerenaAroma AND boja IS tamna
-				THEN belgianStrongAle IS maloVerovatno;
 				
-	RULE 9 : IF aroma IS jakaAroma AND gorcina IS slabaGrocina
+	RULE 8 : IF aroma IS jakaAroma AND gorcina IS umerenoGorko
 				THEN belgianStrongAle IS mozda;
 	
-	RULE 10 : IF aroma IS slabaAroma AND boja IS tamna
+	RULE 9 : IF aroma IS slabaAroma
 				THEN belgianStrongAle IS nije;
+				
+	RULE 10 : IF jacina IS slabo
+				THEN belgianStrongAle IS nije;
+				
+	RULE 11 : IF (jacina IS slabo OR jacina IS srednjejako) AND boja IS mutna
+				THEN belgianStrongAle IS maloVerovatno;
+
+END_RULEBLOCK
+
+RULEBLOCK pilsnerRuleBlock
+
+	RULE 1 : IF boja IS svetla AND gorcina IS umerenoGorko AND (jacina IS srednjejako OR jacina IS slabo)
+				THEN pilsner IS veomaVerovatno;
+				
+	RULE 2 : IF boja IS tamna
+				THEN pilsner IS nije;
+	
+	RULE 3 : IF gorcina IS umerenoGorko AND aroma IS slabaAroma
+				THEN pilsner IS verovatno;
+				
+	RULE 4 : IF boja IS svetla AND (aroma IS slabaAroma OR jacina IS srednjejako)
+				THEN pilsner IS veomaVerovatno;
+	
+	RULE 5 : IF (gorcina IS umerenoGorko OR aroma IS slabaAroma) AND boja IS svetla
+				THEN pilsner IS veomaVerovatno;	
+				
+	RULE 6 : IF (boja IS mutna OR boja IS svetla) AND (jacina IS srednjejako OR jacina IS slabo) AND (gorcina IS umerenoGorko OR gorcina IS slabaGrocina)
+				THEN pilsner IS veomaVerovatno;
+	
+	RULE 7 : IF gorcina IS veomaGorko AND jacina IS srednjejako
+				THEN pilsner IS mozda;
+	
+	RULE 8 : IF aroma IS jakaAroma
+				THEN pilsner IS maloVerovatno;
+				
+	RULE 9 : IF (aroma IS jakaAroma AND aroma IS umerenaAroma) AND gorcina IS slabaGrocina
+				THEN pilsner IS maloVerovatno;
+	
+	RULE 10 : IF aroma IS jakaAroma AND boja IS tamna
+				THEN pilsner IS nije;
+				
+	RULE 11 : IF gorcina IS slabaGrocina
+				THEN pilsner IS nije;
+
+END_RULEBLOCK
+
+RULEBLOCK witbeerRuleBlock
+	AND : MIN;
+	ACT : MIN;
+	ACCU : MAX;
+	
+	RULE 1 : IF boja IS svetla AND gorcina IS slabaGrocina
+				THEN witbeer IS veomaVerovatno;
+				
+	RULE 2 : IF (jacina IS srednjejako OR jacina IS slabo) AND (gorcina IS slabaGrocina OR gorcina IS umerenoGorko)
+				THEN witbeer IS veomaVerovatno;
+	
+	RULE 3 : IF aroma IS umerenaAroma AND jacina IS srednjejako AND (gorcina IS slabaGrocina OR gorcina IS umerenoGorko)
+				THEN witbeer IS mozda;
+				
+	RULE 4 : IF aroma IS slabaAroma AND jacina IS slabo AND (gorcina IS slabaGrocina OR gorcina IS umerenoGorko)
+				THEN witbeer IS verovatno;
+	
+	RULE 5 : IF aroma IS umerenaAroma AND  jacina IS slabo AND gorcina IS slabaGrocina
+				THEN witbeer IS verovatno;	
+				
+	RULE 6 : IF aroma IS umerenaAroma AND jacina IS slabo AND gorcina IS slabaGrocina AND boja IS svetla
+				THEN witbeer IS veomaVerovatno;
+				
+	RULE 7 : IF gorcina IS veomaGorko AND aroma IS slabaAroma
+				THEN witbeer IS nije;
+	
+	RULE 8 : IF jacina IS jako AND (gorcina IS umerenoGorko OR gorcina IS veomaGorko)
+				THEN witbeer IS nije;
+	
+	RULE 9 : IF boja IS svetla AND gorcina IS slabaGrocina AND (jacina IS srednjejako OR jacina IS slabo)
+				THEN witbeer IS veomaVerovatno;
+				
+	RULE 10 : IF jacina IS slabo AND gorcina IS slabaGrocina AND aroma IS umerenaAroma
+				THEN witbeer IS verovatno;
+	
+	RULE 11 : IF boja IS mutna AND gorcina IS slabaGrocina AND aroma IS umerenaAroma
+				THEN witbeer IS mozda;
+
+END_RULEBLOCK
+
+RULEBLOCK paleLagerRuleBlock
+
+	RULE 1 : IF boja IS svetla AND gorcina IS umerenoGorko AND (jacina IS srednjejako OR jacina IS slabo)
+				THEN paleLager IS veomaVerovatno;
+				
+	RULE 2 : IF boja IS tamna OR gorcina IS veomaGorko
+				THEN paleLager IS nije;
+	
+	RULE 3 : IF gorcina IS umerenoGorko AND aroma IS slabaAroma
+				THEN paleLager IS verovatno;
+				
+	RULE 4 : IF boja IS svetla AND (aroma IS slabaAroma OR jacina IS srednjejako)
+				THEN paleLager IS veomaVerovatno;
+	
+	RULE 5 : IF (gorcina IS umerenoGorko OR aroma IS slabaAroma) AND boja IS svetla
+				THEN paleLager IS veomaVerovatno;	
+				
+	RULE 6 : IF (boja IS mutna OR boja IS svetla) AND (jacina IS srednjejako OR jacina IS slabo) AND (gorcina IS umerenoGorko OR gorcina IS slabaGrocina)
+				THEN paleLager IS verovatno;
+	
+	RULE 7 : IF gorcina IS veomaGorko AND jacina IS srednjejako
+				THEN paleLager IS mozda;
+	
+	RULE 8 : IF aroma IS jakaAroma
+				THEN paleLager IS maloVerovatno;
+				
+	RULE 9 : IF (aroma IS jakaAroma AND aroma IS umerenaAroma) AND gorcina IS umerenoGorko
+				THEN paleLager IS maloVerovatno;
+	
+	RULE 10 : IF aroma IS jakaAroma AND boja IS tamna
+				THEN paleLager IS nije;
 
 END_RULEBLOCK
 
