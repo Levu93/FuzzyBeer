@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.sourceforge.jFuzzyLogic.FIS;
-import net.sourceforge.jFuzzyLogic.plot.JFuzzyChart;
+//import net.sourceforge.jFuzzyLogic.plot.JFuzzyChart;
 
 public class FuzzyLogic {
 	
@@ -47,10 +47,10 @@ public class FuzzyLogic {
 		rezultat.put("Kristalweizen",  fis.getVariable("kristalweizen").defuzzify());
 		rezultat.put("Heffeweizen",  fis.getVariable("heffeweizen").defuzzify());
 		
-		JFuzzyChart.get().chart(fis.getVariable("gorcina"), true);
-		JFuzzyChart.get().chart(fis.getVariable("boja"), true);
-		JFuzzyChart.get().chart(fis.getVariable("jacina"), true);
-		JFuzzyChart.get().chart(fis.getVariable("aroma"), true);
+		//JFuzzyChart.get().chart(fis.getVariable("gorcina"), true);
+		//JFuzzyChart.get().chart(fis.getVariable("boja"), true);
+		//JFuzzyChart.get().chart(fis.getVariable("jacina"), true);
+		//JFuzzyChart.get().chart(fis.getVariable("aroma"), true);
 		
 		System.out.println("Rezultat: ");
         HashMap<String, Double> sortedMapDesc = sortByComparator(rezultat, DESC);
@@ -91,6 +91,7 @@ public class FuzzyLogic {
         return sortedMap;
     }
 
+	
 	private static void printMap(HashMap<String, Double> map)
     {
         for (Entry<String, Double> entry : map.entrySet())
@@ -98,4 +99,5 @@ public class FuzzyLogic {
             System.out.println("Key : " + entry.getKey() + " Value : "+ entry.getValue());
         }
     }
+	
 }
